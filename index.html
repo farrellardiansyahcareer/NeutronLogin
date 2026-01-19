@@ -41,7 +41,7 @@
 </div>
 
 <script>
-  <script>
+ <script>
 let users = [];
 
 fetch("https://script.google.com/macros/s/AKfycbxLOLXZ3sR2sH-kDK6v3205SpeGMh_9d7RI8FGsXuDK02FF9nWRXVuy23fRIXcu-lFcJA/exec")
@@ -54,7 +54,7 @@ fetch("https://script.google.com/macros/s/AKfycbxLOLXZ3sR2sH-kDK6v3205SpeGMh_9d7
     document.getElementById("msg").innerText =
       "Gagal memuat data. Coba lagi nanti.";
   });
-  function login() {
+function login() {
   const phone = document.getElementById("phone").value.trim();
   const resultBox = document.getElementById("result");
   const msg = document.getElementById("msg");
