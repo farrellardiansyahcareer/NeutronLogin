@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
   <meta charset="UTF-8">
+  <title>Login Akses</title>
   <style>
     body {
       font-family: Arial;
-      background:#f2f2f2;
+      background: #f4f6f8;
     }
     .box {
-      width:320px;
-      margin:100px auto;
-      background:#fff;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0 0 15px rgba(0,0,0,0.1);
+      width: 320px;
+      margin: 120px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     input, button {
-      width:100%;
-      padding:10px;
-      margin:8px 0;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
     }
     button {
-      background:#4CAF50;
-      color:white;
-      border:none;
-      cursor:pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h3>Login Akun</h3>
-  <input id="user" placeholder="Username">
-  <input id="pass" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <p id="msg"></p>
+  <h3>Login Akses</h3>
+  <p>Masukkan nomor HP terdaftar</p>
+
+  <input id="phone" placeholder="Contoh: 628123456789">
+  <button onclick="login()">Masuk</button>
+
+  <div id="msg" class="error"></div>
 </div>
 
 <script>
-function login(){
-  const u = document.getElementById("user").value;
-  const p = document.getElementById("pass").value;
+const users = {
+  "628123456789": "ortu.html",
+  "628111222333": "siswa.html",
+  "628999888777": "admin.html"
+};
 
-  if(u === "admin" && p === "12345"){
-    window.location.href = "https://aplikasi.neutron.co.id";
+function login() {
+  const phone = document.getElementById("phone").value.trim();
+
+  if (users[phone]) {
+    window.location.href = users[phone];
   } else {
-    document.getElementById("msg").innerText = "Username atau password salah";
+    document.getElementById("msg").innerText =
+      "Nomor HP tidak terdaftar";
   }
 }
 </script>
