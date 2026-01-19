@@ -2,67 +2,87 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Login Akses</title>
+  <title>Akses Login</title>
   <style>
-    body {
-      font-family: Arial;
-      background: #f4f6f8;
-    }
+    body { font-family: Arial; background:#f4f6f8; }
     .box {
-      width: 320px;
-      margin: 120px auto;
-      background: white;
+      width: 340px;
+      margin: 100px auto;
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
     input, button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
     }
-    button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
+    .result {
+      margin-top: 15px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 6px;
     }
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-    }
+    .error { color: red; }
   </style>
 </head>
 <body>
 
 <div class="box">
   <h3>Login Akses</h3>
-  <p>Masukkan nomor HP terdaftar</p>
 
-  <input id="phone" placeholder="Contoh: 628123456789">
+  <input id="phone" placeholder="Masukkan nomor HP (62xxxx)">
   <button onclick="login()">Masuk</button>
 
-  <div id="msg" class="error"></div>
+  <p id="msg" class="error"></p>
+
+  <div id="result" class="result" style="display:none;"></div>
 </div>
 
 <script>
-const users = {
-  "628123456789": "ortu.html",
-  "628111222333": "siswa.html",
-  "628999888777": "admin.html"
-};
+  <script>
+let users = [];
 
-function login() {
-  const phone = document.getElementById("phone").value.trim();
-
-  if (users[phone]) {
-    window.location.href = users[phone];
-  } else {
+fetch("PASTE_URL_JSON_KAMU_DI_SINI")
+  .then(res => res.json())
+  .then(data => {
+    users = data;
+    console.log("Data loaded", users);
+  })
+  .catch(err => {
     document.getElementById("msg").innerText =
-      "Nomor HP tidak terdaftar";
+      "Gagal memuat data. Coba lagi nanti.";
+  });
+  function login() {
+  const phone = document.getElementById("phone").value.trim();
+  const resultBox = document.getElementById("result");
+  const msg = document.getElementById("msg");
+
+  msg.innerText = "";
+  resultBox.style.display = "none";
+
+  const user = users.find(u => u.phone == phone);
+
+  if (!user) {
+    msg.innerText = "Nomor HP tidak terdaftar";
+    return;
   }
+
+  resultBox.innerHTML = `
+    <strong>Nama:</strong> ${user.nama}<br><br>
+    <strong>Username:</strong> ${user.username}<br>
+    <strong>Password:</strong> ${user.password}<br><br>
+    <a href="${user.link}" target="_blank">🔗 Login Sekarang</a>
+    <p style="font-size:12px;color:#555;">
+      ⚠️ Mohon segera mengganti password setelah login
+    </p>
+  `;
+
+  resultBox.style.display = "block";
 }
+</script>
+
 </script>
 
 </body>
